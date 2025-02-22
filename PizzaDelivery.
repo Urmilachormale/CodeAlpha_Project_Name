@@ -1,0 +1,60 @@
+import time
+
+def display_menu():
+    menu = {
+        "Margherita": 8.99,
+        "Pepperoni": 9.99,
+        "BBQ Chicken": 10.99,
+        "Veggie": 8.49
+    }
+    print("\n--- Pizza Menu ---")
+    for pizza, price in menu.items():
+        print(f"{pizza}: ${price:.2f}")
+    return menu
+
+def take_order(menu):
+    order = []
+    total_cost = 0
+    while True:
+        choice = input("Enter the pizza name to order (or type 'done' to finish): ").title()
+        if choice == "Done":
+            break
+        elif choice in menu:
+            order.append(choice)
+            total_cost += menu[choice]
+            print(f"{choice} added to order. Current total: ${total_cost:.2f}")
+        else:
+            print("Sorry, we don't have that pizza. Please choose from the menu.")
+    return order, total_cost
+
+def get_delivery_details():
+    name = input("Enter your name: ")
+    address = input("Enter your delivery address: ")
+    phone = input("Enter your phone number: ")
+    return name, address, phone
+
+def confirm_order(name, address, phone, order, total_cost):
+    print("\n--- Order Summary ---")
+    print(f"Customer: {name}")
+    print(f"Address: {address}")
+    print(f"Phone: {phone}")
+    print("Order:")
+    for pizza in order:
+        print(f" - {pizza}")
+    print(f"Total Cost: ${total_cost:.2f}")
+    print("\nProcessing your order...")
+    time.sleep(2)
+    print("Your pizza is on the way! Enjoy!")
+
+def main():
+    print("Welcome to Python Pizza Delivery!")
+    menu = display_menu()
+    order, total_cost = take_order(menu)
+    if order:
+        name, address, phone = get_delivery_details()
+        confirm_order(name, address, phone, order, total_cost)
+    else:
+        print("No order placed. Thank you!")
+
+if __name__ == "__main__":
+    main()
